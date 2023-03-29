@@ -9,7 +9,7 @@ router.post('/', (req, res) => {
         Post.create(req.body).then((createdPost) => {
             foundUser.posts.push(createdPost)
             foundUser.save().then((data) => {
-                res.json(createdPost)
+                res.json(data)
             })
         })
     })
@@ -17,23 +17,20 @@ router.post('/', (req, res) => {
 
 router.get('/', (req, res) => {
     User.find({}).then((allUsers) => {
-        res.json({users: allUsers})
+        res.json(allUsers)
     })
 })
 
 router.get('/', (req, res) => {
     Post.find({}).then((foundPost) => {
-        res.json({posts: foundPost})
+        res.json(foundPost)
     })
 })
 
 router.get('/:id', (req, res) => {
     Post.findById(req.params.id).then((foundPost) => {
         User.find({ 'posts._id': req.params.id }).then((foundUser) => {
-            res.json({
-                user: foundUser,
-                post: foundPost
-            })
+            res.json(foundUser, foundPost)
         })
     })
 })
@@ -55,7 +52,7 @@ router.put('/:id', (req, res) => {
             foundUser.posts.id(req.params.id).deleteOne()
             foundUser.posts.push(updatedPost)
             foundUser.save((err, data) => {
-                res.json('/' + req.params.id)
+                res.json(data)
             })
         })
     })

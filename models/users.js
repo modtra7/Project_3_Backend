@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const Post = require('./posts.js')
 
 const userSchema = new mongoose.Schema({
     name: String,
@@ -7,7 +6,11 @@ const userSchema = new mongoose.Schema({
     age: Number,
     gender: String,
     bio: String,
-    posts: [Post.schema]
+    posts: [{
+        text: String,
+        image: String,
+        link: String
+    }]
 })
 
 const User = mongoose.model('User', userSchema)

@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const User = require('../models/users.js')
+const Post = require('../models/posts.js')
 
 router.post('/', (req, res) => {
     User.create(req.body).then((createdUser) => {

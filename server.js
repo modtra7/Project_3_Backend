@@ -9,6 +9,8 @@ app.use(cors())
 
 const usersController = require('./controllers/users.js')
 app.use('/users', usersController)
+const postsController = require('./controllers/posts.js')
+app.use('/users', postsController)
 
 const PORT = process.env.PORT
 const MONGODB_URI = process.env.MONGODB_URI

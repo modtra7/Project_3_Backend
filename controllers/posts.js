@@ -7,25 +7,25 @@ const Post = require('../models/posts.js')
 router.post('/', (req, res) => {
     User.findById(req.body.userId).then((foundUser) => {
         Post.create(req.body).then((createdPost) => {
-            foundUser.posts.push(createdPost)
-            foundUser.save().then((data) => {
-                res.json(data)
-            })
+            res.json(createdPost)
         })
     })
 })
 
 router.get('/', (req, res) => {
-    User.find({}).then((allUsers) => {
-        res.json(allUsers)
+    User.findById(req.body.userId).then((foundUser) => {
+        console.log(req.body.id);
+        Post.find({}).then((foundPosts) => {
+            res.json(foundPosts)
+        })
     })
 })
 
-router.get('/', (req, res) => {
-    Post.find({}).then((foundPost) => {
-        res.json(foundPost)
-    })
-})
+// router.get('/', (req, res) => {
+//     Post.find({}).then((foundPost) => {
+//         res.json(foundPost)
+//     })
+// })
 
 router.get('/:id', (req, res) => {
     Post.findById(req.params.id).then((foundPost) => {

@@ -37,24 +37,13 @@ router.get('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
     Post.findByIdAndRemove(req.params.id).then((foundPost) => {
-        User.findOne({'posts._id':req.params.id}).then((foundUser) => {
-            foundUser.posts.id(req.params.id).deletedOne()
-            foundUser.save().then((data) => {
-                res.json(data)
-            })
-        })
+        res.json(foundPost)
     })
 })
 
 router.put('/:id', (req, res) => {
-    Post.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, updatedPost) => {
-        User.findOne({'posts._id' : req.params.id}, (err, foundUser) => {
-            foundUser.posts.id(req.params.id).deleteOne()
-            foundUser.posts.push(updatedPost)
-            foundUser.save((err, data) => {
-                res.json(data)
-            })
-        })
+    Post.findByIdAndUpdate(req.params.id, req.body, {new:true}).then((updatedPost) => {
+        res.json(updatedPost)
     })
 })
 
